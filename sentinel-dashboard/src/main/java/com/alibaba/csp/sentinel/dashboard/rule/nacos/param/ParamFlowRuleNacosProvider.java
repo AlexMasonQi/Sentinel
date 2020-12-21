@@ -1,6 +1,6 @@
-package com.alibaba.csp.sentinel.dashboard.rule.nacos.system;
+package com.alibaba.csp.sentinel.dashboard.rule.nacos.param;
 
-import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.SystemRuleEntity;
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.dashboard.rule.nacos.NacosConfigUtil;
 import com.alibaba.csp.sentinel.datasource.Converter;
@@ -16,18 +16,18 @@ import java.util.List;
  * @version 1.0
  * @since 2020/12/18.
  */
-@Component("systemRuleNacosProvider")
-public class SystemRuleNacosProvider implements DynamicRuleProvider<List<SystemRuleEntity>> {
+@Component("paramRuleNacosProvider")
+public class ParamFlowRuleNacosProvider implements DynamicRuleProvider<List<ParamFlowRuleEntity>> {
 
     @Autowired
     private ConfigService configService;
 
     @Autowired
-    private Converter<String, List<SystemRuleEntity>> converter;
+    private Converter<String, List<ParamFlowRuleEntity>> converter;
 
     @Override
-    public List<SystemRuleEntity> getRules(String appName) throws Exception {
-        String rules = configService.getConfig(appName + NacosConfigUtil.SYSTEM_DATA_ID_POSTFIX, NacosConfigUtil.GROUP_ID, 3000);
+    public List<ParamFlowRuleEntity> getRules(String appName) throws Exception {
+        String rules = configService.getConfig(appName + NacosConfigUtil.PARAM_FLOW_DATA_ID_POSTFIX, NacosConfigUtil.GROUP_ID, 3000);
         if (StringUtil.isEmpty(rules))
             return new ArrayList<>();
         return converter.convert(rules);

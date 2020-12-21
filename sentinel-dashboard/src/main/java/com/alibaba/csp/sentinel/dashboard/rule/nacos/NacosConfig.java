@@ -15,16 +15,13 @@
  */
 package com.alibaba.csp.sentinel.dashboard.rule.nacos;
 
-import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.*;
 import com.alibaba.csp.sentinel.datasource.Converter;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.api.config.ConfigFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -37,8 +34,9 @@ import java.util.List;
 @Configuration
 public class NacosConfig {
 
-    private final Gson gson=new GsonBuilder().create();
+    private final Gson gson = new GsonBuilder().create();
 
+    // flow rule
     @Bean
     public Converter<List<FlowRuleEntity>, String> flowRuleEntityEncoder() {
         return gson::toJson;
@@ -46,7 +44,56 @@ public class NacosConfig {
 
     @Bean
     public Converter<String, List<FlowRuleEntity>> flowRuleEntityDecoder() {
-        return s-> gson.fromJson(s,new TypeToken<List<FlowRuleEntity>>(){}.getType());
+        return s -> gson.fromJson(s, new TypeToken<List<FlowRuleEntity>>() {
+        }.getType());
+    }
+
+    // authority rule
+    @Bean
+    public Converter<List<AuthorityRuleEntity>, String> authorityRuleEntityEncoder() {
+        return gson::toJson;
+    }
+
+    @Bean
+    public Converter<String, List<AuthorityRuleEntity>> authorityEntityDecoder() {
+        return s -> gson.fromJson(s, new TypeToken<List<AuthorityRuleEntity>>() {
+        }.getType());
+    }
+
+    // degrade rule
+    @Bean
+    public Converter<List<DegradeRuleEntity>, String> degradeRuleEntityEncoder() {
+        return gson::toJson;
+    }
+
+    @Bean
+    public Converter<String, List<DegradeRuleEntity>> degradeRuleEntityDecoder() {
+        return s -> gson.fromJson(s, new TypeToken<List<DegradeRuleEntity>>() {
+        }.getType());
+    }
+
+    // param flow rule
+    @Bean
+    public Converter<List<ParamFlowRuleEntity>, String> paramFlowRuleEntityEncoder() {
+        return gson::toJson;
+    }
+
+    @Bean
+    public Converter<String, List<ParamFlowRuleEntity>> paramFlowRuleEntityDecoder() {
+        return s -> gson.fromJson(s, new TypeToken<List<ParamFlowRuleEntity>>() {
+        }.getType());
+    }
+
+    // system rule
+    @Bean
+    public Converter<List<SystemRuleEntity>, String> systemRuleEntityEncoder() {
+        return gson::toJson;
+    }
+
+    @Bean
+    public Converter<String, List<SystemRuleEntity>> systemRuleEntityDecoder() {
+        return s -> gson.fromJson(s, new TypeToken<List<SystemRuleEntity>>() {
+        }.getType());
     }
 
     @Bean

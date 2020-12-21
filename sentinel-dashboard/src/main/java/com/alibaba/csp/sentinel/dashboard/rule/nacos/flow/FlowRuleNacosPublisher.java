@@ -35,15 +35,15 @@ public class FlowRuleNacosPublisher implements DynamicRulePublisher<List<FlowRul
 
     @Autowired
     private ConfigService configService;
+
     @Autowired
     private Converter<List<FlowRuleEntity>, String> converter;
 
     @Override
     public void publish(String app, List<FlowRuleEntity> rules) throws Exception {
         AssertUtil.notEmpty(app, "app name cannot be empty");
-        if (rules == null) {
+        if (rules == null)
             return;
-        }
         configService.publishConfig(app + NacosConfigUtil.FLOW_DATA_ID_POSTFIX,
             NacosConfigUtil.GROUP_ID, converter.convert(rules));
     }
