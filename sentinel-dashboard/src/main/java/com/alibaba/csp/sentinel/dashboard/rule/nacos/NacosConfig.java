@@ -22,6 +22,7 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,6 +36,9 @@ import java.util.List;
 public class NacosConfig {
 
     private final Gson gson = new GsonBuilder().create();
+
+    @Value(("${sentinel.nacos.server}"))
+    private String nacosServerAddr;
 
     // flow rule
     @Bean
@@ -98,6 +102,6 @@ public class NacosConfig {
 
     @Bean
     public ConfigService nacosConfigService() throws Exception {
-        return ConfigFactory.createConfigService("localhost");
+        return ConfigFactory.createConfigService(nacosServerAddr);
     }
 }

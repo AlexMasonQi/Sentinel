@@ -17,7 +17,6 @@ package com.alibaba.csp.sentinel.dashboard.controller;
 
 import com.alibaba.csp.sentinel.dashboard.auth.AuthAction;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthService.PrivilegeType;
-import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.AuthorityRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.domain.Result;
 import com.alibaba.csp.sentinel.dashboard.repository.rule.RuleRepository;
@@ -45,8 +44,6 @@ public class AuthorityRuleController {
     private final Logger logger = LoggerFactory.getLogger(AuthorityRuleController.class);
 
     @Autowired
-    private SentinelApiClient sentinelApiClient;
-    @Autowired
     private RuleRepository<AuthorityRuleEntity, Long> repository;
 
     @Autowired
@@ -65,12 +62,6 @@ public class AuthorityRuleController {
         if (StringUtil.isEmpty(app)) {
             return Result.ofFail(-1, "app cannot be null or empty");
         }
-//        if (StringUtil.isEmpty(ip)) {
-//            return Result.ofFail(-1, "ip cannot be null or empty");
-//        }
-//        if (port == null || port <= 0) {
-//            return Result.ofFail(-1, "Invalid parameter: port");
-//        }
         try {
             List<AuthorityRuleEntity> rules = ruleProvider.getRules(app);
             rules = repository.saveAll(rules);

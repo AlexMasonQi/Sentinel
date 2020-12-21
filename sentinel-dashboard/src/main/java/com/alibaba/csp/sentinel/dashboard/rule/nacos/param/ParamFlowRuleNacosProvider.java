@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0
  * @since 2020/12/18.
  */
-@Component("paramRuleNacosProvider")
+@Component("paramFlowRuleNacosProvider")
 public class ParamFlowRuleNacosProvider implements DynamicRuleProvider<List<ParamFlowRuleEntity>> {
 
     @Autowired
