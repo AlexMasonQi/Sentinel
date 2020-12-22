@@ -97,11 +97,9 @@ public class ParamFlowRuleController {
             return unsupportedVersion();
         }
         try {
-            publishRules(app);
-            return sentinelApiClient.fetchParamFlowRulesOfMachine(app, ip, port)
-                    .thenApply(repository::saveAll)
-                    .thenApply(Result::ofSuccess)
-                    .get();
+            List<ParamFlowRuleEntity> paramFlowRules = ruleProvider.getRules(app);
+            repository.saveAll(paramFlowRules);
+            return Result.ofSuccess(paramFlowRules);
         } catch (ExecutionException ex) {
             logger.error("Error when querying parameter flow rules", ex.getCause());
             if (isNotSupported(ex.getCause())) {
