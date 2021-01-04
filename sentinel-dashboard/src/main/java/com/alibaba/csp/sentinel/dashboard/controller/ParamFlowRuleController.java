@@ -19,7 +19,6 @@ import com.alibaba.csp.sentinel.dashboard.auth.AuthAction;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthService;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthService.PrivilegeType;
 import com.alibaba.csp.sentinel.dashboard.client.CommandNotFoundException;
-import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.SentinelVersion;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.ParamFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.discovery.AppManagement;
@@ -51,8 +50,6 @@ public class ParamFlowRuleController {
 
     private final Logger logger = LoggerFactory.getLogger(ParamFlowRuleController.class);
 
-    @Autowired
-    private SentinelApiClient sentinelApiClient;
     @Autowired
     private AppManagement appManagement;
     @Autowired
@@ -98,7 +95,7 @@ public class ParamFlowRuleController {
         }
         try {
             List<ParamFlowRuleEntity> paramFlowRules = ruleProvider.getRules(app);
-            repository.saveAll(paramFlowRules);
+            paramFlowRules = repository.saveAll(paramFlowRules);
             return Result.ofSuccess(paramFlowRules);
         } catch (ExecutionException ex) {
             logger.error("Error when querying parameter flow rules", ex.getCause());
